@@ -53,8 +53,7 @@ import { ChamadoReadComponent } from './components/chamado/chamado-read/chamado-
   declarations: [
     AppComponent,
     NavComponent,
-    /*NavComponent,
-    HomeComponent,
+    /*HomeComponent,
     HeaderComponent,
     TecnicoListComponent,
     LoginComponent,
