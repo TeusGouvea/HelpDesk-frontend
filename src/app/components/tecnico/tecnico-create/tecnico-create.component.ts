@@ -13,14 +13,14 @@ import { TecnicoService } from 'src/app/services/tecnico.service';
 export class TecnicoCreateComponent implements OnInit {
 
   tecnico: Tecnico = {
-    id:'',
-    nome:'',
-    cpf:'',
-    email:'',
-    senha:'',
-    perfis:[],
+    id: '',
+    nome: '',
+    cpf: '',
+    email: '',
+    senha: '',
+    perfis: [],
     dataCriacao: ''
-  }
+  };
 
   nome: FormControl = new FormControl(null, Validators.minLength(3));
   cpf: FormControl = new FormControl(null, Validators.required);
@@ -33,34 +33,41 @@ export class TecnicoCreateComponent implements OnInit {
     private router: Router
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  create(): void{
+  // Função para formatar o CPF antes de enviar ao backend
+  private formatarCPF(cpf: string): string {
+    return cpf.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+
+  create(): void {
+    // Formata o CPF antes de enviar
+    this.tecnico.cpf = this.formatarCPF(this.tecnico.cpf);
+
     this.service.create(this.tecnico).subscribe(() => {
       this.toast.success('Técnico cadastrado com sucesso', 'Cadastro');
-      this.router.navigate(['tecnicos'])
+      this.router.navigate(['tecnicos']);
     }, ex => {
-      if(ex.error.errors){
-        ex.error.errors.array.forEach(element => {
+      if (ex.error.errors) {
+        ex.error.errors.forEach((element: any) => {
           this.toast.error(element.message);
         });
       } else {
         this.toast.error(ex.error.message);
       }
-    })
+    });
   }
 
-  addPerfil(perfil: any): void{
-    if(this.tecnico.perfis.includes(perfil)){
+  addPerfil(perfil: any): void {
+    if (this.tecnico.perfis.includes(perfil)) {
       this.tecnico.perfis.splice(this.tecnico.perfis.indexOf(perfil), 1);
-    } else{
+    } else {
       this.tecnico.perfis.push(perfil);
     }
-
   }
 
-  validaCampos(): boolean{
-    return this.nome.valid && this.cpf.valid && this.email.valid && this.senha.valid
+  validaCampos(): boolean {
+    return this.nome.valid && this.cpf.valid && this.email.valid && this.senha.valid;
   }
 
 }

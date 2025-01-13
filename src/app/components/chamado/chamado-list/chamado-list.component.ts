@@ -13,11 +13,12 @@ export class ChamadoListComponent implements OnInit {
 
   ELEMENT_DATA: Chamado[] = []
   FILTERED_DATA: Chamado[] = []
+  selectedStatus: number | null = null; // Variável para controlar o status selecionado
     
-    displayedColumns: string[] = ['id', 'titulo', 'cliente', 'tecnico','dataAbertura', 'prioridade', 'status', 'acoes'];
-    dataSource = new MatTableDataSource<Chamado>(this.ELEMENT_DATA);
+  displayedColumns: string[] = ['id', 'titulo', 'cliente', 'tecnico','dataAbertura', 'dataFechamento', 'prioridade', 'status', 'acoes'];
+  dataSource = new MatTableDataSource<Chamado>(this.ELEMENT_DATA);
   
-    @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     private service: ChamadoService
@@ -40,37 +41,38 @@ export class ChamadoListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  retornaStatus(status: any): string{
-    if(status == '0'){
-      return 'ABERTO'
-    } else if (status == '1'){
-      return 'EM ANDAMENTO'
-    } else{
-      return 'ENCERRADO'
+  retornaStatus(status: any): string {
+    if (status === 0) {
+      return 'ABERTO';
+    } else if (status === 1) {
+      return 'EM ANDAMENTO';
+    } else {
+      return 'ENCERRADO';
     } 
   }
 
-  retornaPrioridade(prioridade: any): string{
-    if(prioridade == '0'){
-      return 'BAIXA'
-    } else if (prioridade == '1'){
-      return 'MÉDIA'
-    } else{
-      return 'ALTA'
+  retornaPrioridade(prioridade: any): string {
+    if (prioridade === 0) {
+      return 'BAIXA';
+    } else if (prioridade === 1) {
+      return 'MÉDIA';
+    } else {
+      return 'ALTA';
     } 
   }
 
-  orderByStatus(status: any): void {
-    let list: Chamado[] = []
-    this.ELEMENT_DATA.forEach(element => {
-      if(element.status == status)
-        list.push(element)
-    });
-    this.FILTERED_DATA = list;
-    this.dataSource = new MatTableDataSource<Chamado>(list);
-    this.dataSource.paginator = this.paginator
+  orderByStatus(status: number): void {
+    // Se o mesmo status foi clicado novamente, desmarque a seleção e resete os dados
+    if (this.selectedStatus === status) {
+      this.selectedStatus = null;
+      this.FILTERED_DATA = this.ELEMENT_DATA; // Reseta o filtro
+    } else {
+      this.selectedStatus = status;
+      // Converte o status de ambos os lados para números antes de comparar
+      this.FILTERED_DATA = this.ELEMENT_DATA.filter(element => Number(element.status) === status);
+    }
+    // Atualiza a tabela com o filtro aplicado
+    this.dataSource = new MatTableDataSource<Chamado>(this.FILTERED_DATA);
+    this.dataSource.paginator = this.paginator;
   }
-
 }
-
-   

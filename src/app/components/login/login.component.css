@@ -37,4 +37,8 @@ button{
 button:hover{
     background-color: #03CCFC;
 }
+
+mat-icon{
+    opacity: .6;
+}
  
