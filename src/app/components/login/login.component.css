@@ -4,41 +4,83 @@
     display: flex;
     align-items: center;
     justify-content: center;
- }
- 
+}
+
 .form {
     width: 30rem;
     margin: auto;
     background-color: rgb(235, 235, 235);
     padding: 4rem 1rem;
     border-radius: 1rem;
- }
- 
+}
+
 h1 {
     width: 100%;
-    text-align: center;  
- }
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+}
 
-img{
+img {
     height: 15rem;
     width: 100%;
-    margin: 1.5rem auto 1.5rem auto;
+    margin: 1.5rem auto;
 }
 
 .full-width {
     width: 100%;
 }
 
-button{
+button {
     margin-top: 1.5rem;
     border-radius: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-button:hover{
+button:hover {
     background-color: #03CCFC;
 }
 
-mat-icon{
-    opacity: .6;
+mat-icon {
+    opacity: 0.6;
 }
- 
+
+/* Contêiner flexível para alinhar input e exclamação */
+.input-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+/* Tooltip Styling */
+.tooltip {
+    position: absolute;
+    right: -25px; /* Ajusta a posição para ficar ao lado direito do campo */
+    display: inline-block;
+    cursor: pointer;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    border-radius: 5px;
+    padding: 8px;
+    position: absolute;
+    z-index: 1;
+    bottom: 120%; /* Posiciona acima do ícone */
+    left: 50%;
+    margin: auto;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: 0.9rem;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}

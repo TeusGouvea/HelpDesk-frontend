@@ -15,29 +15,33 @@ export class LoginComponent implements OnInit {
   creds: Credenciais = {
     email: '',
     senha: ''
-  }
+  };
 
-  email = new FormControl(null, Validators.email);
-  senha = new FormControl(null, Validators.minLength(3));
+  email = new FormControl(null, [Validators.required, Validators.email]);
+  senha = new FormControl(null, [Validators.required, Validators.minLength(3)]);
+
+  // Variáveis para controle da exibição das mensagens de tooltip
+  showEmailMessage = false;
+  showPasswordMessage = false;
 
   constructor(
     private toast: ToastrService,
     private service: AuthService,
-    private router: Router) { }
+    private router: Router
+  ) { }
 
   ngOnInit(): void { }
 
   logar() {
     this.service.authenticate(this.creds).subscribe(resposta => {
       this.service.successfullLogin(resposta.headers.get('Authorization').substring(7));
-      this.router.navigate([''])
+      this.router.navigate(['']);
     }, () => {
       this.toast.error('Usuário e/ou senha inválidos');
-    })
+    });
   }
 
   validaCampos(): boolean {
-    return this.email.valid && this.senha.valid
+    return this.email.valid && this.senha.valid;
   }
-
 }
