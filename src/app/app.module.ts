@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
 // Para trabalhar com formulários no Angular 12
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
@@ -45,6 +46,7 @@ import { ClienteDeleteComponent } from './components/cliente/cliente-delete/clie
 import { ClienteListComponent } from './components/cliente/cliente-list/cliente-list.component';
 import { ClienteUpdateComponent } from './components/cliente/cliente-update/cliente-update.component';
 import { ChamadoListComponent } from './components/chamado/chamado-list/chamado-list.component';
+import { ChamadoCreateComponent } from './components/chamado/chamado-create/chamado-create.component';
 
 
 @NgModule({
@@ -63,6 +65,7 @@ import { ChamadoListComponent } from './components/chamado/chamado-list/chamado-
     ClienteListComponent,
     ClienteUpdateComponent,
     ChamadoListComponent,
+    ChamadoCreateComponent
    
     
     
